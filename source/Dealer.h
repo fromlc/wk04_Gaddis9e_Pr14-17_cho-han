@@ -11,6 +11,10 @@
 
 #include <ostream>
 #include <string>
+
+//------------------------------------------------------------------------------
+// using symbols
+//------------------------------------------------------------------------------
 using std::ostream;
 using std::string;
 
@@ -19,26 +23,25 @@ using std::string;
 //------------------------------------------------------------------------------
 class Dealer {
 private:
-	Die die1;             // Object for die #1
-	Die die2;             // Object for die #2
-	bool resultEven;
+	Die die1, die2;
+	bool resultIsEven;
 
+	// allow << operator private access
 	friend ostream& operator<<(ostream&, Dealer&);
 
 public:
 	Dealer();					// Constructor
 	void rollDice(int&, int&);	// Put die values in reference parameters
-	string getChoOrHan() const;	// Get the result (Cho or Han)
+	bool isResultEven() const;	// return true on Cho result, false on Han
 	int getDie1Value() const;
 	int getDie2Value() const;
-
 };
 
 //------------------------------------------------------------------------------
-// overload << operator to display result
+// overloaded << operator streams result string
 //------------------------------------------------------------------------------
 static ostream& operator<<(ostream& os, Dealer& d) {
-	os << d.resultEven ? "Cho (even)" : "Han (odd)";
+	os << (d.resultIsEven ? "Cho (even)" : "Han (odd)");
 	return os;
 }
 #endif

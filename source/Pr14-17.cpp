@@ -125,7 +125,7 @@ void roundResults() {
 		<< " and " << die2Value;
 
 	// show the result
-	cout << ": " << game::dealer.getChoOrHan() << '\n';
+	cout << ": " << game::dealer << '\n';
 
 	// check each player's guess and award points
 	checkGuess(game::player1);
@@ -138,13 +138,14 @@ void roundResults() {
 void checkGuess(Player& player) {
 
 	// get the player's guess
-	string guess = player.getGuess();
+	bool guessedEven = player.isGuessEven();
+	string guess = guessedEven ? "Cho (even)" : "Han (odd)";
 
 	// display the player's guess
-	cout << player.getName() << " guessed " << guess << '.';
+	cout << player << " guessed " << guess << '.';
 
 	// award points if the player guessed correctly
-	if (!guess.compare(game::dealer.getChoOrHan())) {
+	if (!(guessedEven xor game::dealer.isResultEven())) {
 
 		player.addPoints(POINTS_TO_ADD);
 		cout << " Awarding " << POINTS_TO_ADD << " point";
@@ -152,9 +153,8 @@ void checkGuess(Player& player) {
 		if (POINTS_TO_ADD > 1) {
 			cout << 's';
 		}
-		cout << " to " << player.getName() << '!';
+		cout << " to " << player << '!';
 	}
-
 	cout << '\n';
 }
 
@@ -168,21 +168,20 @@ void displayGrandWinner() {
 	int points1 = game::player1.getPoints();
 
 	// display player #1's results
-	cout << game::player1.getName() << ": "
+	cout << game::player1 << ": "
 		<< points1 << " points\n";
 
 	int points2 = game::player2.getPoints();
 
 	// display player #2's results
-	cout << game::player2.getName() << ": "
-		<< points2 << " points\n";
+	cout << game::player2 << ": " << points2 << " points\n";
 
 	// determine the grand winner
 	if (points1 > points2) {
-		cout << game::player1.getName() << " is the grand winner!\n";
+		cout << game::player1 << " is the grand winner!\n";
 	}
 	else if (points2 > points1) {
-		cout << game::player2.getName() << " is the grand winner!\n";
+		cout << game::player2 << " is the grand winner!\n";
 	}
 	else {
 		cout << "Both players are tied!\n";

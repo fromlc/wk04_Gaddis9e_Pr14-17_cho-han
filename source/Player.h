@@ -7,8 +7,14 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include <ostream>
 #include <string>
-using namespace std;
+
+//------------------------------------------------------------------------------
+// using symbols
+//------------------------------------------------------------------------------
+using std::ostream;
+using std::string;
 
 //------------------------------------------------------------------------------
 // Player
@@ -16,8 +22,11 @@ using namespace std;
 class Player {
 private:
 	string name;
-	string guess;
+	bool guessIsEven;
 	int points;
+
+	// allow << operator private access
+	friend ostream& operator<<(ostream&, Player&);
 
 public:
 	Player();						// default constructor
@@ -27,9 +36,17 @@ public:
 	string getName() const;
 
 	void makeGuess();				// Causes player to make a guess
-	string getGuess() const;		// Returns the player's guess
+	bool isGuessEven() const;		// Returns true on even guess, false on odd
 
 	void addPoints(int);			// Adds points to the player
 	int getPoints() const;			// Returns the player's points
 };
+
+//------------------------------------------------------------------------------
+// overloaded << operator streams player name
+//------------------------------------------------------------------------------
+static ostream& operator<<(ostream& os, Player& p) {
+	os << p.name;
+	return os;
+}
 #endif

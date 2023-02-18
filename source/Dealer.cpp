@@ -9,7 +9,7 @@
 //------------------------------------------------------------------------------
 // Constructor
 //------------------------------------------------------------------------------
-Dealer::Dealer() { }
+Dealer::Dealer() { resultIsEven = false; }
 
 //------------------------------------------------------------------------------
 // - rolls both dice and saves their values
@@ -17,17 +17,14 @@ Dealer::Dealer() { }
 void Dealer::rollDice(int& die1Value, int& die2Value) {
 	die1Value = die1.roll();
 	die2Value = die2.roll();
+
+	resultIsEven = !((die1.value + die2.value) % 2);
 }
 
 //------------------------------------------------------------------------------
 // returns the string result of the dice roll: Cho (even) or Han (odd).                           *
 //------------------------------------------------------------------------------
-string Dealer::getChoOrHan() const {
-
-	bool even = !((die1.value + die2.value) % 2);
-
-	return even ? "Cho (even)" : "Han (odd)";
-}
+bool Dealer::isResultEven() const { return resultIsEven; }
 
 //------------------------------------------------------------------------------
 // returns the value of die #1

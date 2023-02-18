@@ -10,14 +10,15 @@
 using std::string;
 
 //------------------------------------------------------------------------------
-// default constructor
+// overload constructor
 //------------------------------------------------------------------------------
-Player::Player() { Player(""); }
+Player::Player(const string& playerName) :
+	name(playerName), guessIsEven(0), points(0) { }
 
 //------------------------------------------------------------------------------
-// Constructor
+// default constructor
 //------------------------------------------------------------------------------
-Player::Player(const string& playerName) : name(playerName), guess(""), points(0) { }
+Player::Player() : Player("player") {}
 
 //------------------------------------------------------------------------------
 // sets player name
@@ -34,20 +35,14 @@ string Player::getName() const { return name; }
 //------------------------------------------------------------------------------
 void Player::makeGuess() {
 
-	constexpr int MIN_VALUE = 0;
-	constexpr int MAX_VALUE = 1;
-
-	// Get a random number, either 0 or 1.
-	int guessNumber = (rand() % (MAX_VALUE - MIN_VALUE + 1)) + MIN_VALUE;
-
-	// Convert the random number to Cho or Han.
-	guess = (guessNumber == 0) ? "Cho (even)" : "Han (odd)";
+	// get a random number, either 0 or 1.
+	guessIsEven = (rand() % 2) ? true : false;
 }
 
 //------------------------------------------------------------------------------
-// returns the player's guess
+// returns true if the player's guess is even, false if guess is odd
 //------------------------------------------------------------------------------
-string Player::getGuess() const { return guess; }
+bool Player::isGuessEven() const { return guessIsEven; }
 
 //------------------------------------------------------------------------------
 // adds the specified number of points to the player                            *
