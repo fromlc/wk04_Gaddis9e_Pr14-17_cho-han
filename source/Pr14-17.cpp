@@ -67,6 +67,7 @@ int main() {
 // initialize game environment
 //------------------------------------------------------------------------------
 void initGame() {
+
 	// Seed the random number generator.
 	srand((unsigned int)time(0));
 
@@ -80,6 +81,7 @@ void initGame() {
 // get player names from user input
 //------------------------------------------------------------------------------
 void getPlayerNames() {
+
 	string name;
 
 	// get the player's names
@@ -162,6 +164,7 @@ void checkGuess(Player& player) {
 // displays the game's grand winner
 //------------------------------------------------------------------------------
 void displayGrandWinner() {
+
 	cout << DIVIDER;
 	cout << "Game over. Here are the results:\n";
 
@@ -177,13 +180,11 @@ void displayGrandWinner() {
 	cout << game::player2 << ": " << points2 << " points\n";
 
 	// determine the grand winner
-	if (points1 > points2) {
-		cout << game::player1 << " is the grand winner!\n";
-	}
-	else if (points2 > points1) {
-		cout << game::player2 << " is the grand winner!\n";
-	}
-	else {
+	if (points1 == points2) {
 		cout << "Both players are tied!\n";
+		return;
 	}
+
+	cout << (points1 > points2 ? game::player1 : game::player2)
+		<< " is the grand winner!\n";
 }
