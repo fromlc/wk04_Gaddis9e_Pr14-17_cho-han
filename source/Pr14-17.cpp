@@ -68,9 +68,6 @@ int main() {
 		cout << "\n--------------------------------------------------\n";
 		cout << "Round " << round << '\n';
 
-		// roll the dice
-		dealer.rollDice();
-
 		// the players make their guesses
 		player1.makeGuess();
 		player2.makeGuess();
@@ -90,9 +87,14 @@ int main() {
 //------------------------------------------------------------------------------
 void roundResults(Dealer& dealer, Player& player1, Player& player2) {
 
+	int die1Value, die2Value;
+
+	// roll the dice
+	dealer.rollDice(die1Value, die2Value);
+
 	// show the dice values
-	cout << "The dealer rolled " << dealer.getDie1Value()
-		<< " and " << dealer.getDie2Value(); 
+	cout << "The dealer rolled " << die1Value
+		<< " and " << die2Value;
 
 	// show the result
 	cout << ": " << dealer.getChoOrHan() << '\n';
@@ -144,7 +146,7 @@ void displayGrandWinner(Player player1, Player player2) {
 		<< player2.getPoints() << " points\n";
 
 	// determine the grand winner
-	if (player1.getPoints() > player2.getPoints()) 	{
+	if (player1.getPoints() > player2.getPoints()) {
 		cout << player1.getName() << " is the grand winner!\n";
 	}
 	else if (player2.getPoints() > player1.getPoints()) {

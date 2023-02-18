@@ -8,14 +8,13 @@
 
 //------------------------------------------------------------------------------
 // Constructor
-// - set the intial dice values to 0 (we won't use these values)
 //------------------------------------------------------------------------------
-Dealer::Dealer() { die1Value = die2Value = 0; }
+Dealer::Dealer() { }
 
 //------------------------------------------------------------------------------
 // - rolls both dice and saves their values
 //------------------------------------------------------------------------------
-void Dealer::rollDice() {
+void Dealer::rollDice(int& die1Value, int& die2Value) {
 	die1Value = die1.roll();
 	die2Value = die2.roll();
 }
@@ -25,7 +24,7 @@ void Dealer::rollDice() {
 //------------------------------------------------------------------------------
 string Dealer::getChoOrHan() const {
 
-	bool even = !((die1Value + die2Value) % 2);
+	bool even = !((die1.value + die2.value) % 2);
 
 	return even ? "Cho (even)" : "Han (odd)";
 }
@@ -33,9 +32,9 @@ string Dealer::getChoOrHan() const {
 //------------------------------------------------------------------------------
 // returns the value of die #1
 //------------------------------------------------------------------------------
-int Dealer::getDie1Value() const { return die1Value; }
+int Dealer::getDie1Value() const { return die1.value; }
 
 //------------------------------------------------------------------------------
 // returns the value of die #2
 //------------------------------------------------------------------------------
-int Dealer::getDie2Value() const { return die2Value; }
+int Dealer::getDie2Value() const { return die2.value; }

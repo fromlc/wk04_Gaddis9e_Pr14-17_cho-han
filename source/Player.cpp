@@ -19,14 +19,14 @@ Player::Player(string playerName) : name(playerName), guess(""), points(0) { }
 //------------------------------------------------------------------------------
 void Player::makeGuess() {
 
-   constexpr int MIN_VALUE = 0;
-   constexpr int MAX_VALUE = 1;
+	constexpr int MIN_VALUE = 0;
+	constexpr int MAX_VALUE = 1;
 
-   // Get a random number, either 0 or 1.
-   int guessNumber = (rand() % (MAX_VALUE - MIN_VALUE + 1)) + MIN_VALUE;
+	// Get a random number, either 0 or 1.
+	int guessNumber = (rand() % (MAX_VALUE - MIN_VALUE + 1)) + MIN_VALUE;
 
-   // Convert the random number to Cho or Han.
-   guess = (guessNumber == 0) ? "Cho (even)" : "Han (odd)";
+	// Convert the random number to Cho or Han.
+	guess = (guessNumber == 0) ? "Cho (even)" : "Han (odd)";
 }
 
 //------------------------------------------------------------------------------
