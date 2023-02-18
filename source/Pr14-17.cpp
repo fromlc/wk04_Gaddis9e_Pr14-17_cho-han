@@ -101,7 +101,7 @@ void playChoHan() {
 
 	for (int round = 1; round <= MAX_ROUNDS; round++) {
 		cout << DIVIDER;
-		cout << "Round " << round << '\n';
+		cout << "\nRound " << round << '\n';
 
 		// the players make their guesses
 		game::player1.makeGuess();
