@@ -29,6 +29,7 @@ using std::string;
 //------------------------------------------------------------------------------
 constexpr int MAX_ROUNDS = 5;		// number of rounds to play
 constexpr int POINTS_TO_ADD = 1;	// points to award winner
+const string DIVIDER = "\n--------------------------------------------------\n";
 
 //------------------------------------------------------------------------------
 // namespace globals
@@ -41,6 +42,9 @@ namespace game {
 //------------------------------------------------------------------------------
 // prototypes
 //------------------------------------------------------------------------------
+void initGame();
+void getPlayerNames();
+void playChoHan();
 void roundResults();
 void checkGuess(Player&);
 void displayGrandWinner();
@@ -50,12 +54,32 @@ void displayGrandWinner();
 //------------------------------------------------------------------------------
 int main() {
 
+	initGame();
+
+	playChoHan();
+
+	displayGrandWinner();
+
+	return 0;
+}
+
+//------------------------------------------------------------------------------
+// initialize game environment
+//------------------------------------------------------------------------------
+void initGame() {
 	// Seed the random number generator.
 	srand((unsigned int)time(0));
 
 	// app banner
 	cout << "\nWelcome to Cho-Han!\n\n";
 
+	getPlayerNames();
+}
+
+//------------------------------------------------------------------------------
+// get player names from user input
+//------------------------------------------------------------------------------
+void getPlayerNames() {
 	string name;
 
 	// get the player's names
@@ -66,10 +90,15 @@ int main() {
 	cout << "Enter the second player's name: ";
 	cin >> name;
 	game::player2.setName(name);
+}
 
-	// play the rounds
+//------------------------------------------------------------------------------
+// loop to play game rounds
+//------------------------------------------------------------------------------
+void playChoHan() {
+
 	for (int round = 1; round <= MAX_ROUNDS; round++) {
-		cout << "\n--------------------------------------------------\n";
+		cout << DIVIDER;
 		cout << "Round " << round << '\n';
 
 		// the players make their guesses
@@ -79,11 +108,6 @@ int main() {
 		// determine the winner of this round
 		roundResults();
 	}
-
-	// display the grand winner
-	displayGrandWinner();
-
-	return 0;
 }
 
 //------------------------------------------------------------------------------
@@ -138,7 +162,7 @@ void checkGuess(Player& player) {
 // displays the game's grand winner
 //------------------------------------------------------------------------------
 void displayGrandWinner() {
-	cout << "\n--------------------------------------------------\n";
+	cout << DIVIDER;
 	cout << "Game over. Here are the results:\n";
 
 	int points1 = game::player1.getPoints();
