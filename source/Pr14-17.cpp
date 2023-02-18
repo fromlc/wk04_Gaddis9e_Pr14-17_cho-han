@@ -31,11 +31,19 @@ constexpr int MAX_ROUNDS = 5;		// number of rounds to play
 constexpr int POINTS_TO_ADD = 1;	// points to award winner
 
 //------------------------------------------------------------------------------
+// namespace globals
+//------------------------------------------------------------------------------
+namespace game {
+	Dealer dealer;
+	Player player1, player2;
+}
+
+//------------------------------------------------------------------------------
 // prototypes
 //------------------------------------------------------------------------------
-void roundResults(Dealer&, Player&, Player&);
-void checkGuess(Player&, Dealer&);
-void displayGrandWinner(Player, Player);
+void roundResults();
+void checkGuess(Player&);
+void displayGrandWinner();
 
 //------------------------------------------------------------------------------
 // entry point
@@ -48,20 +56,16 @@ int main() {
 	// app banner
 	cout << "\nWelcome to Cho-Han!\n\n";
 
-	string player1Name, player2Name;
+	string name;
 
 	// get the player's names
 	cout << "Enter the first player's name: ";
-	cin >> player1Name;
+	cin >> name;
+	game::player1.setName(name);
+
 	cout << "Enter the second player's name: ";
-	cin >> player2Name;
-
-	// create the two players
-	Player player1(player1Name);
-	Player player2(player2Name);
-
-	// create the dealer
-	Dealer dealer;
+	cin >> name;
+	game::player2.setName(name);
 
 	// play the rounds
 	for (int round = 1; round <= MAX_ROUNDS; round++) {
@@ -69,15 +73,15 @@ int main() {
 		cout << "Round " << round << '\n';
 
 		// the players make their guesses
-		player1.makeGuess();
-		player2.makeGuess();
+		game::player1.makeGuess();
+		game::player2.makeGuess();
 
 		// determine the winner of this round
-		roundResults(dealer, player1, player2);
+		roundResults();
 	}
 
 	// display the grand winner
-	displayGrandWinner(player1, player2);
+	displayGrandWinner();
 
 	return 0;
 }
@@ -85,29 +89,29 @@ int main() {
 //------------------------------------------------------------------------------
 // determines the results of the current round
 //------------------------------------------------------------------------------
-void roundResults(Dealer& dealer, Player& player1, Player& player2) {
+void roundResults() {
 
 	int die1Value, die2Value;
 
 	// roll the dice
-	dealer.rollDice(die1Value, die2Value);
+	game::dealer.rollDice(die1Value, die2Value);
 
 	// show the dice values
 	cout << "The dealer rolled " << die1Value
 		<< " and " << die2Value;
 
 	// show the result
-	cout << ": " << dealer.getChoOrHan() << '\n';
+	cout << ": " << game::dealer.getChoOrHan() << '\n';
 
 	// check each player's guess and award points
-	checkGuess(player1, dealer);
-	checkGuess(player2, dealer);
+	checkGuess(game::player1);
+	checkGuess(game::player2);
 }
 
 //------------------------------------------------------------------------------
 // checks a player's guess against the dealer's result
 //------------------------------------------------------------------------------
-void checkGuess(Player& player, Dealer& dealer) {
+void checkGuess(Player& player) {
 
 	// get the player's guess
 	string guess = player.getGuess();
@@ -116,7 +120,7 @@ void checkGuess(Player& player, Dealer& dealer) {
 	cout << player.getName() << " guessed " << guess << '.';
 
 	// award points if the player guessed correctly
-	if (!guess.compare(dealer.getChoOrHan())) {
+	if (!guess.compare(game::dealer.getChoOrHan())) {
 
 		player.addPoints(POINTS_TO_ADD);
 		cout << " Awarding " << POINTS_TO_ADD << " point";
@@ -133,24 +137,28 @@ void checkGuess(Player& player, Dealer& dealer) {
 //------------------------------------------------------------------------------
 // displays the game's grand winner
 //------------------------------------------------------------------------------
-void displayGrandWinner(Player player1, Player player2) {
+void displayGrandWinner() {
 	cout << "\n--------------------------------------------------\n";
 	cout << "Game over. Here are the results:\n";
 
+	int points1 = game::player1.getPoints();
+
 	// display player #1's results
-	cout << player1.getName() << ": "
-		<< player1.getPoints() << " points\n";
+	cout << game::player1.getName() << ": "
+		<< points1 << " points\n";
+
+	int points2 = game::player2.getPoints();
 
 	// display player #2's results
-	cout << player2.getName() << ": "
-		<< player2.getPoints() << " points\n";
+	cout << game::player2.getName() << ": "
+		<< points2 << " points\n";
 
 	// determine the grand winner
-	if (player1.getPoints() > player2.getPoints()) {
-		cout << player1.getName() << " is the grand winner!\n";
+	if (points1 > points2) {
+		cout << game::player1.getName() << " is the grand winner!\n";
 	}
-	else if (player2.getPoints() > player1.getPoints()) {
-		cout << player2.getName() << " is the grand winner!\n";
+	else if (points2 > points1) {
+		cout << game::player2.getName() << " is the grand winner!\n";
 	}
 	else {
 		cout << "Both players are tied!\n";
