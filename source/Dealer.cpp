@@ -13,11 +13,8 @@ Dealer::Dealer() { die1Value = die2Value = 0; }
 // - rolls both dice and saves their values
 //------------------------------------------------------------------------------
 void Dealer::rollDice() {
-	die1.roll();
-	die2.roll();
-
-	die1Value = die1.getValue();
-	die2Value = die2.getValue();
+	die1Value = die1.roll();
+	die2Value = die2.roll();
 }
 
 //------------------------------------------------------------------------------
@@ -25,7 +22,7 @@ void Dealer::rollDice() {
 //------------------------------------------------------------------------------
 string Dealer::getChoOrHan() const {
 
-	bool even = (die1Value + die2Value) % 2;
+	bool even = !((die1Value + die2Value) % 2);
 
 	return even ? "Cho (even)" : "Han (odd)";
 }
