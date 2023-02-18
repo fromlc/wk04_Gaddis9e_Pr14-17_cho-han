@@ -2,10 +2,9 @@
 // Player.cpp : class definition/implementation
 //------------------------------------------------------------------------------
 #include "Player.h"
-#include <cstdlib>
-#include <ctime>
+
 #include <string>
-using namespace std;
+using std::string;
 
 //------------------------------------------------------------------------------
 // Constructor
