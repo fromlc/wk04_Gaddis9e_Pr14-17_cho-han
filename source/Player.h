@@ -15,16 +15,16 @@ using namespace std;
 //------------------------------------------------------------------------------
 class Player {
 private:
-   string name;
-   string guess;
-   int points;
+	string name;
+	string guess;
+	int points;
 
 public:
-   Player(string);				// Constructor
-   void makeGuess();			// Causes player to make a guess
-   void addPoints(int);			// Adds points to the player
-   string getName() const;		// Returns the player's name
-   string getGuess() const;		// Returns the player's guess
-   int getPoints() const;		// Returns the player's points
+	Player(string);				// Constructor
+	void makeGuess();			// Causes player to make a guess
+	void addPoints(int);			// Adds points to the player
+	string getName() const;		// Returns the player's name
+	string getGuess() const;		// Returns the player's guess
+	int getPoints() const;		// Returns the player's points
 };
 #endif
