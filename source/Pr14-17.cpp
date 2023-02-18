@@ -6,7 +6,8 @@
 // Points are awarded for each correct guess. The grand winner is displayed
 // after all rounds are played.
 // 
-// Author: Gaddis9e pp. 876-884
+// Author: Gaddis9e Ch. 14 pp. 876-884
+// Modified by: Prof. Linda C
 //------------------------------------------------------------------------------
 #include "Dealer.h"
 #include "Player.h"

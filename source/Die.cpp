@@ -1,5 +1,8 @@
 //------------------------------------------------------------------------------
 // Die.cpp : class definition/implementation
+// 
+// Author: Tony Gaddis, Gaddis9e Ch.14
+// Modified by: Prof. Linda C
 //------------------------------------------------------------------------------
 
 #include "Die.h"

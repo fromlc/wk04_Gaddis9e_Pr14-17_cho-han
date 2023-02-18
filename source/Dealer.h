@@ -1,5 +1,8 @@
 //------------------------------------------------------------------------------
 // Dealer.h : class declaration/specification
+// 
+// Author: Tony Gaddis, Gaddis9e Ch.14
+// Modified by: Prof. Linda C
 //------------------------------------------------------------------------------
 #ifndef DEALER_H
 #define DEALER_H

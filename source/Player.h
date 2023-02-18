@@ -1,5 +1,8 @@
 //------------------------------------------------------------------------------
 // Player.h : class declaration/specification
+//
+// Author: Tony Gaddis, Gaddis9e Ch.14
+// Modified by: Prof. Linda C
 //------------------------------------------------------------------------------
 #ifndef PLAYER_H
 #define PLAYER_H

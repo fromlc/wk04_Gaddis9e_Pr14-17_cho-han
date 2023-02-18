@@ -1,5 +1,8 @@
 //------------------------------------------------------------------------------
 // Die.h : class declaration/specification
+// 
+// Author: Tony Gaddis, Gaddis9e Ch.13
+// Modified by: Prof. Linda C
 //------------------------------------------------------------------------------
 #ifndef DIE_H
 #define DIE_H
