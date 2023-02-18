@@ -6,8 +6,8 @@
 
 class Die {
 private:
-   int sides;   // Number of sides
-   int value;   // The die's value
+   int sides;				// Number of die sides
+   int value;				// The die's value
 
 public:
    Die();					// Constructor
