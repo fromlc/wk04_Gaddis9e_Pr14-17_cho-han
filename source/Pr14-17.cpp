@@ -1,9 +1,18 @@
-// This program simulates the game of Cho-Han.
+//------------------------------------------------------------------------------
+// Pr14-17.cpp
+// 
+// This program simulates the game of Cho-Han with two players.
+// Players guess whether the dealer will roll an even total with two dice.
+// Points are awarded for each correct guess. The grand winner is displayed
+// after all rounds are played.
+// 
+// Author: Gaddis9e pp. 876-884
+//------------------------------------------------------------------------------
 #include "Dealer.h"
 #include "Player.h"
 
-#include <cstdlib>     // For srand()
-#include <ctime>       // For time()
+#include <cstdlib>     // for srand()
+#include <ctime>       // for time()
 #include <iostream>
 #include <string>
 
@@ -17,7 +26,8 @@ using std::string;
 //------------------------------------------------------------------------------
 // constants
 //------------------------------------------------------------------------------
-constexpr int MAX_ROUNDS = 5;  // Number of rounds
+constexpr int MAX_ROUNDS = 5;		// number of rounds to play
+constexpr int POINTS_TO_ADD = 1;	// points to award winner
 
 //------------------------------------------------------------------------------
 // prototypes
@@ -39,36 +49,36 @@ int main() {
 
 	string player1Name, player2Name;
 
-	// Get the player's names.
+	// get the player's names
 	cout << "Enter the first player's name: ";
 	cin >> player1Name;
 	cout << "Enter the second player's name: ";
 	cin >> player2Name;
 
-	// Create the two players.
+	// create the two players
 	Player player1(player1Name);
 	Player player2(player2Name);
 
-	// Create the dealer.
+	// create the dealer
 	Dealer dealer;
 
-	// Play the rounds.
+	// play the rounds
 	for (int round = 1; round <= MAX_ROUNDS; round++) {
 		cout << "\n--------------------------------------------------\n";
 		cout << "Round " << round << '\n';
 
-		// Roll the dice
+		// roll the dice
 		dealer.rollDice();
 
-		// The players make their guesses
+		// the players make their guesses
 		player1.makeGuess();
 		player2.makeGuess();
 
-		// Determine the winner of this round
+		// determine the winner of this round
 		roundResults(dealer, player1, player2);
 	}
 
-	// Display the grand winner
+	// display the grand winner
 	displayGrandWinner(player1, player2);
 
 	return 0;
@@ -78,14 +88,15 @@ int main() {
 // determines the results of the current round
 //------------------------------------------------------------------------------
 void roundResults(Dealer& dealer, Player& player1, Player& player2) {
-	// Show the dice values.
+
+	// show the dice values
 	cout << "The dealer rolled " << dealer.getDie1Value()
 		<< " and " << dealer.getDie2Value(); 
 
-	// Show the result (Cho or Han).
+	// show the result
 	cout << ": " << dealer.getChoOrHan() << '\n';
 
-	// Check each player's guess and award points.
+	// check each player's guess and award points
 	checkGuess(player1, dealer);
 	checkGuess(player2, dealer);
 }
@@ -94,16 +105,14 @@ void roundResults(Dealer& dealer, Player& player1, Player& player2) {
 // checks a player's guess against the dealer's result
 //------------------------------------------------------------------------------
 void checkGuess(Player& player, Dealer& dealer) {
-	// Points to award winner
-	const int POINTS_TO_ADD = 1;
 
-	// Get the player's guess
+	// get the player's guess
 	string guess = player.getGuess();
 
-	// Display the player's guess
+	// display the player's guess
 	cout << player.getName() << " guessed " << guess << '.';
 
-	// Award points if the player guessed correctly
+	// award points if the player guessed correctly
 	if (!guess.compare(dealer.getChoOrHan())) {
 
 		player.addPoints(POINTS_TO_ADD);
@@ -120,21 +129,21 @@ void checkGuess(Player& player, Dealer& dealer) {
 
 
 //------------------------------------------------------------------------------
-// displays the game's grand winner.
+// displays the game's grand winner
 //------------------------------------------------------------------------------
 void displayGrandWinner(Player player1, Player player2) {
 	cout << "\n--------------------------------------------------\n";
 	cout << "Game over. Here are the results:\n";
 
-	// Display player #1's results
+	// display player #1's results
 	cout << player1.getName() << ": "
 		<< player1.getPoints() << " points\n";
 
-	// Display player #2's results
+	// display player #2's results
 	cout << player2.getName() << ": "
 		<< player2.getPoints() << " points\n";
 
-	// Determine the grand winner
+	// determine the grand winner
 	if (player1.getPoints() > player2.getPoints()) 	{
 		cout << player1.getName() << " is the grand winner!\n";
 	}
