@@ -27,8 +27,8 @@ using std::string;
 //------------------------------------------------------------------------------
 // constants
 //------------------------------------------------------------------------------
-constexpr int MAX_ROUNDS = 5;		// number of rounds to play
-constexpr int POINTS_TO_ADD = 1;	// points to award winner
+constexpr int ROUNDS = 5;			// number of rounds to play
+constexpr int POINTS = 1;			// points to award winner
 const string DIVIDER = "\n--------------------------------------------------\n";
 
 //------------------------------------------------------------------------------
@@ -36,6 +36,7 @@ const string DIVIDER = "\n--------------------------------------------------\n";
 //------------------------------------------------------------------------------
 namespace game {
 	Dealer dealer;
+	ChoHan rollResult;
 	Player player1, player2;
 }
 
@@ -45,8 +46,8 @@ namespace game {
 void initGame();
 void getPlayerNames();
 void playChoHan();
-void roundResults();
-void checkGuess(Player&);
+void playARound();
+int checkGuess(Player&);
 void displayGrandWinner();
 
 //------------------------------------------------------------------------------
@@ -72,7 +73,15 @@ void initGame() {
 	srand((unsigned int)time(0));
 
 	// app banner
-	cout << "\nWelcome to Cho-Han!\n\n";
+	cout << "\nWelcome to the ancient dice game of Cho-Han!\n\n";
+	cout << "An even roll is Cho, an odd roll is Han.\n";
+	cout << "The Dealer will roll the dice " << ROUNDS << " times.\n";
+	cout << "Players will guess Cho or Han before each roll.\n";
+	cout << "Each correct guess is worth " << POINTS << " point";
+	if (POINTS > 1) {
+		cout << 's';
+	}
+	cout << ". Good luck!\n\n";
 
 	getPlayerNames();
 }
@@ -99,64 +108,69 @@ void getPlayerNames() {
 //------------------------------------------------------------------------------
 void playChoHan() {
 
-	for (int round = 1; round <= MAX_ROUNDS; round++) {
+	for (int round = 1; round <= ROUNDS; round++) {
 		cout << DIVIDER;
 		cout << "\nRound " << round << '\n';
 
-		// the players make their guesses
-		game::player1.makeGuess();
-		game::player2.makeGuess();
-
 		// determine the winner of this round
-		roundResults();
+		playARound();
 	}
 }
 
 //------------------------------------------------------------------------------
 // determines the results of the current round
 //------------------------------------------------------------------------------
-void roundResults() {
+void playARound() {
 
 	int die1Value, die2Value;
 
 	// roll the dice
-	game::dealer.rollDice(die1Value, die2Value);
+	game::rollResult = game::dealer.rollDice(die1Value, die2Value);
 
-	// show the dice values
-	cout << "The dealer rolled " << die1Value << " and " << die2Value;
-
-	// show the result
-	cout << ": " << game::dealer << '\n';
+	// show the roll result
+	cout << "Dealer rolled " << die1Value << " and " << die2Value
+		<< ". " << die1Value + die2Value << " is " << game::dealer
+		<< "!\n";
 
 	// check each player's guess and award points
-	checkGuess(game::player1);
-	checkGuess(game::player2);
+	int points1 = checkGuess(game::player1);
+	int points2 = checkGuess(game::player2);
+
+	// show current score
+	cout << "Score so far: " << game::player1 << ' ' << points1
+		<< ", " << game::player2 << ' ' << points2 << '\n';
 }
 
 //------------------------------------------------------------------------------
-// checks a player's guess against the dealer's result
+// - checks a player's guess against the dealer's result
+// - returns number of points awarded
 //------------------------------------------------------------------------------
-void checkGuess(Player& player) {
+int checkGuess(Player& player) {
 
 	// get the player's guess
-	bool guessedEven = player.isGuessEven();
-	string guess = guessedEven ? "Cho (even)" : "Han (odd)";
+	ChoHan guess = player.makeGuess();
+	string guessStr = Cho ? "Cho" : "Han";
+	int pointsAwarded = 0;
 
 	// display the player's guess
-	cout << player << " guessed " << guess << '.';
+	cout << player << " guessed " << guessStr << '.';
 
 	// award points if the player guessed correctly
-	if (!(guessedEven xor game::dealer.isResultEven())) {
+	if (guess == game::rollResult) {
 
-		player.addPoints(POINTS_TO_ADD);
-		cout << " Awarding " << POINTS_TO_ADD << " point";
+		pointsAwarded = POINTS;
+		player.addPoints(POINTS);
 
-		if (POINTS_TO_ADD > 1) {
+		cout << " Awarding " << POINTS << " point";
+
+		if (POINTS > 1) {
 			cout << 's';
 		}
 		cout << " to " << player << '!';
 	}
 	cout << '\n';
+
+	return pointsAwarded;
 }
 
 //------------------------------------------------------------------------------
@@ -170,13 +184,12 @@ void displayGrandWinner() {
 	int points1 = game::player1.getPoints();
 
 	// display player #1's results
-	cout << game::player1 << ": "
-		<< points1 << " points\n";
+	cout << game::player1 << " has " << points1 << " points\n";
 
 	int points2 = game::player2.getPoints();
 
 	// display player #2's results
-	cout << game::player2 << ": " << points2 << " points\n";
+	cout << game::player2 << " has " << points2 << " points\n";
 
 	// determine the grand winner
 	if (points1 == points2) {
@@ -185,5 +198,5 @@ void displayGrandWinner() {
 	}
 
 	cout << (points1 > points2 ? game::player1 : game::player2)
-		<< " is the grand winner!\n";
+		<< " is the Grand Winner!\n";
 }

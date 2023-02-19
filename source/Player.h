@@ -7,6 +7,8 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include "Dealer.h"		// enum ChoHan
+
 #include <ostream>
 #include <string>
 
@@ -22,7 +24,6 @@ using std::string;
 class Player {
 private:
 	string name;
-	bool guessIsEven;
 	int points;
 
 	// allow << operator private access
@@ -35,8 +36,7 @@ public:
 	void setName(const string&);
 	string getName() const;
 
-	void makeGuess();				// Causes player to make a guess
-	bool isGuessEven() const;		// Returns true on even guess, false on odd
+	ChoHan makeGuess();				// Causes player to make a guess
 
 	void addPoints(int);			// Adds points to the player
 	int getPoints() const;			// Returns the player's points

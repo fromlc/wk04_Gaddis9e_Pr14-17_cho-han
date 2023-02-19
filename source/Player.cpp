@@ -12,8 +12,7 @@ using std::string;
 //------------------------------------------------------------------------------
 // overload constructor
 //------------------------------------------------------------------------------
-Player::Player(const string& playerName) :
-	name(playerName), guessIsEven(0), points(0) { }
+Player::Player(const string& playerName) : name(playerName), points(0) { }
 
 //------------------------------------------------------------------------------
 // default constructor
@@ -33,16 +32,11 @@ string Player::getName() const { return name; }
 //------------------------------------------------------------------------------
 // causes the player to guess either "Cho (even)" or "Han (odd)"
 //------------------------------------------------------------------------------
-void Player::makeGuess() {
+ChoHan Player::makeGuess() {
 
-	// get a random number, either 0 or 1.
-	guessIsEven = (rand() % 2) ? true : false;
+	// get a random number, either Cho or Han
+	return !(rand() % 2) ? Cho : Han;
 }
-
-//------------------------------------------------------------------------------
-// returns true if the player's guess is even, false if guess is odd
-//------------------------------------------------------------------------------
-bool Player::isGuessEven() const { return guessIsEven; }
 
 //------------------------------------------------------------------------------
 // adds the specified number of points to the player                            *

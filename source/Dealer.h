@@ -18,30 +18,33 @@
 using std::ostream;
 using std::string;
 
+
+//------------------------------------------------------------------------------
+// even or odd dice roll
+//------------------------------------------------------------------------------
+enum ChoHan { Cho = 0, Han = 1, NoDice = 2 };
+
 //------------------------------------------------------------------------------
 // Dealer : friend of Die class
 //------------------------------------------------------------------------------
 class Dealer {
 private:
 	Die die1, die2;
-	bool resultIsEven;
+	ChoHan rollResult;
 
 	// allow << operator private access
 	friend ostream& operator<<(ostream&, Dealer&);
 
 public:
-	Dealer();					// Constructor
-	void rollDice(int&, int&);	// Put die values in reference parameters
-	bool isResultEven() const;	// return true on Cho result, false on Han
-	int getDie1Value() const;
-	int getDie2Value() const;
+	Dealer();						// Constructor
+	ChoHan rollDice(int&, int&);	// Return roll result and die values
 };
 
 //------------------------------------------------------------------------------
 // overloaded << operator streams result string
 //------------------------------------------------------------------------------
 static ostream& operator<<(ostream& os, Dealer& d) {
-	os << (d.resultIsEven ? "Cho (even)" : "Han (odd)");
+	os << (d.rollResult == Cho ? "Cho" : "Han");
 	return os;
 }
 #endif
