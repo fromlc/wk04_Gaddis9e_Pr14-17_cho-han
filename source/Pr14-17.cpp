@@ -81,7 +81,7 @@ void initGame() {
 	cout << "\nWelcome to the ancient dice game of Cho-Han!\n\n";
 	cout << "An even roll is Cho, an odd roll is Han.\n";
 	cout << "The Dealer will roll the dice " << ROUNDS << " times.\n";
-	cout << "Players will guess Cho or Han before each roll.\n";
+	cout << "Players guess Cho or Han before each roll.\n";
 	cout << "Each correct guess is worth " << POINTS << " point";
 	addS(POINTS);
 	cout << ". Good luck!\n\n";
@@ -194,7 +194,7 @@ int scorePlayer(Player& player, ChoHan guess) {
 void displayGrandWinner() {
 
 	cout << DIVIDER;
-	cout << "Game over. Here are the results:\n";
+	cout << "\nGame over! Here are the results:\n";
 
 	int points1 = showScore(game::player1);
 	int points2 = showScore(game::player2); 
