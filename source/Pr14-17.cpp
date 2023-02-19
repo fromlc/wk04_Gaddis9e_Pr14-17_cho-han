@@ -38,17 +38,22 @@ namespace game {
 	Dealer dealer;
 	ChoHan rollResult;
 	Player player1, player2;
+	int score1 = 0;				// player1 score so far
+	int score2 = 0;				// player2 score so far
 }
 
 //------------------------------------------------------------------------------
 // prototypes
 //------------------------------------------------------------------------------
-void initGame();
+void initGame();				// banner, instructions, game setup
 void getPlayerNames();
-void playChoHan();
+void playChoHan();				// game loop
 void playARound();
-int checkGuess(Player&);
+ChoHan doGuess(Player&);		// make and display a guess, return the guess
+int scorePlayer(Player& player, ChoHan guess);	// return player score so far
 void displayGrandWinner();
+int showScore(Player&);
+void inline addS(int);
 
 //------------------------------------------------------------------------------
 // entry point
@@ -78,9 +83,7 @@ void initGame() {
 	cout << "The Dealer will roll the dice " << ROUNDS << " times.\n";
 	cout << "Players will guess Cho or Han before each roll.\n";
 	cout << "Each correct guess is worth " << POINTS << " point";
-	if (POINTS > 1) {
-		cout << 's';
-	}
+	addS(POINTS);
 	cout << ". Good luck!\n\n";
 
 	getPlayerNames();
@@ -122,6 +125,9 @@ void playChoHan() {
 //------------------------------------------------------------------------------
 void playARound() {
 
+	ChoHan guess1 = doGuess(game::player1);
+	ChoHan guess2 = doGuess(game::player2);
+
 	int die1Value, die2Value;
 
 	// roll the dice
@@ -133,44 +139,53 @@ void playARound() {
 		<< "!\n";
 
 	// check each player's guess and award points
-	int points1 = checkGuess(game::player1);
-	int points2 = checkGuess(game::player2);
+	game::score1 = scorePlayer(game::player1, guess1);
+	game::score2 = scorePlayer(game::player2, guess2);
 
 	// show current score
-	cout << "Score so far: " << game::player1 << ' ' << points1
-		<< ", " << game::player2 << ' ' << points2 << '\n';
+	cout << "Score so far: " << game::player1 << ' ' << game::score1
+		<< ", " << game::player2 << ' ' << game::score2 << '\n';
+}
+
+//------------------------------------------------------------------------------
+// - player makes a guess
+// - displays player's guess
+// - returns the guess
+//------------------------------------------------------------------------------
+ChoHan doGuess(Player& player) {
+
+	ChoHan guess = player.makeGuess();
+
+	cout << player << " guessed ";
+
+	if (guess == Cho) {
+		cout << "Cho";
+	}
+	else {
+		cout << "Han";
+	}
+	cout << ".\n";
+
+	return guess;
 }
 
 //------------------------------------------------------------------------------
 // - checks a player's guess against the dealer's result
-// - returns number of points awarded
+// - returns player's score so far
 //------------------------------------------------------------------------------
-int checkGuess(Player& player) {
-
-	// get the player's guess
-	ChoHan guess = player.makeGuess();
-	string guessStr = Cho ? "Cho" : "Han";
-	int pointsAwarded = 0;
-
-	// display the player's guess
-	cout << player << " guessed " << guessStr << '.';
+int scorePlayer(Player& player, ChoHan guess) {
 
 	// award points if the player guessed correctly
 	if (guess == game::rollResult) {
 
-		pointsAwarded = POINTS;
 		player.addPoints(POINTS);
 
-		cout << " Awarding " << POINTS << " point";
-
-		if (POINTS > 1) {
-			cout << 's';
-		}
-		cout << " to " << player << '!';
+		cout << "Awarding " << POINTS << " point";
+		addS(POINTS);
+		cout << " to " << player << ".\n";
 	}
-	cout << '\n';
 
-	return pointsAwarded;
+	return player.getPoints();
 }
 
 //------------------------------------------------------------------------------
@@ -181,15 +196,8 @@ void displayGrandWinner() {
 	cout << DIVIDER;
 	cout << "Game over. Here are the results:\n";
 
-	int points1 = game::player1.getPoints();
-
-	// display player #1's results
-	cout << game::player1 << " has " << points1 << " points\n";
-
-	int points2 = game::player2.getPoints();
-
-	// display player #2's results
-	cout << game::player2 << " has " << points2 << " points\n";
+	int points1 = showScore(game::player1);
+	int points2 = showScore(game::player2); 
 
 	// determine the grand winner
 	if (points1 == points2) {
@@ -199,4 +207,26 @@ void displayGrandWinner() {
 
 	cout << (points1 > points2 ? game::player1 : game::player2)
 		<< " is the Grand Winner!\n";
+}
+
+//------------------------------------------------------------------------------
+// display player score
+//------------------------------------------------------------------------------
+int showScore(Player& player) {
+	int points = player.getPoints();
+
+	cout << player << " has " << points << " point";
+	addS(points);
+	cout << '\n';
+
+	return points;
+}
+
+//------------------------------------------------------------------------------
+// display an s on plural
+//------------------------------------------------------------------------------
+void inline addS(int points) {
+	if (points > 1) {
+		cout << 's';
+	}
 }
