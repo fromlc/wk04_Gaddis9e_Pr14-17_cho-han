@@ -38,8 +38,6 @@ namespace game {
 	Dealer dealer;
 	ChoHan rollResult;
 	Player player1, player2;
-	int score1 = 0;				// player1 score so far
-	int score2 = 0;				// player2 score so far
 }
 
 //------------------------------------------------------------------------------
@@ -139,12 +137,12 @@ void playARound() {
 		<< "!\n";
 
 	// check each player's guess and award points
-	game::score1 = scorePlayer(game::player1, guess1);
-	game::score2 = scorePlayer(game::player2, guess2);
+	int score1 = scorePlayer(game::player1, guess1);
+	int score2 = scorePlayer(game::player2, guess2);
 
 	// show current score
-	cout << "Score so far: " << game::player1 << ' ' << game::score1
-		<< ", " << game::player2 << ' ' << game::score2 << '\n';
+	cout << "Score so far: " << game::player1 << ' ' << score1
+		<< ", " << game::player2 << ' ' << score2 << '\n';
 }
 
 //------------------------------------------------------------------------------
