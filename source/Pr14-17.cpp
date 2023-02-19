@@ -48,7 +48,7 @@ void getPlayerNames();
 void playChoHan();				// game loop
 void playARound();
 ChoHan doGuess(Player&);		// make and display a guess, return the guess
-int scorePlayer(Player& player, ChoHan guess);	// return player score so far
+int doScore(Player&, ChoHan);	// return player score so far
 void displayGrandWinner();
 int showScore(Player&);
 void inline addS(int);
@@ -77,8 +77,8 @@ void initGame() {
 
 	// app banner
 	cout << "\nWelcome to the ancient dice game of Cho-Han!\n\n";
-	cout << "An even roll is Cho, an odd roll is Han.\n";
 	cout << "The Dealer will roll the dice " << ROUNDS << " times.\n";
+	cout << "An even roll is Cho, an odd roll is Han.\n";
 	cout << "Players guess Cho or Han before each roll.\n";
 	cout << "Each correct guess is worth " << POINTS << " point";
 	addS(POINTS);
@@ -136,9 +136,9 @@ void playARound() {
 		<< ". " << die1Value + die2Value << " is " << game::dealer
 		<< "!\n";
 
-	// check each player's guess and award points
-	int score1 = scorePlayer(game::player1, guess1);
-	int score2 = scorePlayer(game::player2, guess2);
+	// check each player's guess, award points, get scores so far
+	int score1 = doScore(game::player1, guess1);
+	int score2 = doScore(game::player2, guess2);
 
 	// show current score
 	cout << "Score so far: " << game::player1 << ' ' << score1
@@ -169,6 +169,7 @@ ChoHan doGuess(Player& player) {
 
 //------------------------------------------------------------------------------
 // - checks a player's guess against the dealer's result
+// - awards POINTS for correct guess
 // - returns player's score so far
 //------------------------------------------------------------------------------
 int scorePlayer(Player& player, ChoHan guess) {
@@ -223,8 +224,8 @@ int showScore(Player& player) {
 //------------------------------------------------------------------------------
 // display an s on plural
 //------------------------------------------------------------------------------
-void inline addS(int points) {
-	if (points > 1) {
+void inline addS(int n) {
+	if (n > 1) {
 		cout << 's';
 	}
 }
