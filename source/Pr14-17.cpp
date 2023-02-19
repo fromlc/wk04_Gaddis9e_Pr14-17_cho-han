@@ -1,10 +1,10 @@
 //------------------------------------------------------------------------------
 // Pr14-17.cpp
 // 
-// This program simulates the game of Cho-Han with two players.
-// Players guess whether the dealer will roll an even total with two dice.
-// Points are awarded for each correct guess. The grand winner is displayed
-// after all rounds are played.
+// This program simulates the game of Cho-Han with two players, a dealer,
+// and two dice. In each round, players guess whether the dealer will roll
+// an even total (Cho) or and odd total (Han). Points are awarded for each
+// correct guess. The grand winner is displayed after all rounds are played.
 // 
 // Author: Gaddis9e Ch. 14 pp. 876-884
 // Modified by: Prof. Linda C
@@ -123,8 +123,7 @@ void roundResults() {
 	game::dealer.rollDice(die1Value, die2Value);
 
 	// show the dice values
-	cout << "The dealer rolled " << die1Value
-		<< " and " << die2Value;
+	cout << "The dealer rolled " << die1Value << " and " << die2Value;
 
 	// show the result
 	cout << ": " << game::dealer << '\n';
