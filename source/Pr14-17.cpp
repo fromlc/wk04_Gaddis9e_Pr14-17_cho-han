@@ -36,7 +36,6 @@ const string DIVIDER = "\n--------------------------------------------------\n";
 //------------------------------------------------------------------------------
 namespace game {
 	Dealer dealer;
-	ChoHan rollResult;
 	Player player1, player2;
 }
 
@@ -129,7 +128,7 @@ void playARound() {
 	int die1Value, die2Value;
 
 	// roll the dice
-	game::rollResult = game::dealer.rollDice(die1Value, die2Value);
+	game::dealer.rollDice(die1Value, die2Value);
 
 	// show the roll result
 	cout << "Dealer rolled " << die1Value << " and " << die2Value
@@ -172,10 +171,10 @@ ChoHan doGuess(Player& player) {
 // - awards POINTS for correct guess
 // - returns player's score so far
 //------------------------------------------------------------------------------
-int scorePlayer(Player& player, ChoHan guess) {
+int doScore(Player& player, ChoHan guess) {
 
 	// award points if the player guessed correctly
-	if (guess == game::rollResult) {
+	if (guess == game::dealer.getRollResult()) {
 
 		player.addPoints(POINTS);
 

@@ -32,19 +32,17 @@ private:
 	Die die1, die2;
 	ChoHan rollResult;
 
-	// allow << operator private access
-	friend ostream& operator<<(ostream&, Dealer&);
-
 public:
 	Dealer();						// Constructor
 	ChoHan rollDice(int&, int&);	// Return roll result and die values
+	ChoHan getRollResult() const;
 };
 
 //------------------------------------------------------------------------------
 // overloaded << operator streams result string
 //------------------------------------------------------------------------------
 static ostream& operator<<(ostream& os, Dealer& d) {
-	os << (d.rollResult == Cho ? "Cho" : "Han");
+	os << (d.getRollResult() == Cho ? "Cho" : "Han");
 	return os;
 }
 #endif

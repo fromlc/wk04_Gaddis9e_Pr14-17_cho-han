@@ -22,3 +22,9 @@ ChoHan Dealer::rollDice(int& die1Value, int& die2Value) {
 	rollResult = !((die1.value + die2.value) % 2) ? Cho : Han;
 	return rollResult;
 }
+
+//------------------------------------------------------------------------------
+// returns result of last dice roll: Cho (even) or Han (odd).                           *
+//------------------------------------------------------------------------------
+ChoHan Dealer::getRollResult() const { return rollResult; }
+
